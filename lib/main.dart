@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async';
 
 void main() {
   runApp(MyApp());
@@ -37,6 +38,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   String _iconCode = "";
   bool _isWeatherLoaded = false;
   bool _isLoading = false;
+  final _debouncer = Debouncer(milliseconds: 500);
 
   @override
   void dispose() {
@@ -64,8 +66,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
           _iconCode = data["weather"][0]["icon"];
           _isWeatherLoaded = true;
         });
+      } else {
+        print("Erro na requisição: ${response.statusCode}");
       }
     } catch (e) {
+      print("Erro na requisição: $e");
     } finally {
       setState(() {
         _isLoading = false;
@@ -74,6 +79,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
   }
 
   void _onTextFieldChanged(String value) {
+    setState(() {
+      _isWeatherLoaded = false;
+    });
+
+    _debouncer.run(() {
+      _fetchWeatherData(value);
+    });
+  }
+
+  void _clearTextField() {
+    _textEditingController.clear();
     setState(() {
       _isWeatherLoaded = false;
     });
@@ -95,15 +111,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
               decoration: InputDecoration(
                 labelText: 'Procure sua cidade',
                 border: OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: _clearTextField,
+                ),
               ),
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: _isLoading
+              onPressed: _isLoading || _textEditingController.text.isEmpty
                   ? null
-                  : _textEditingController.text.isNotEmpty
-                      ? () => _fetchWeatherData(_textEditingController.text)
-                      : null,
+                  : () => _fetchWeatherData(_textEditingController.text),
               child: Text('Pesquisar'),
             ),
             SizedBox(height: 16),
@@ -138,5 +156,20 @@ class _WeatherScreenState extends State<WeatherScreen> {
         ),
       ),
     );
+  }
+}
+
+class Debouncer {
+  final int milliseconds;
+  VoidCallback? action;
+  Timer? _timer;
+
+  Debouncer({required this.milliseconds});
+
+  run(VoidCallback action) {
+    if (_timer != null) {
+      _timer!.cancel();
+    }
+    _timer = Timer(Duration(milliseconds: milliseconds), action);
   }
 }
