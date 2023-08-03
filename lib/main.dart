@@ -8,7 +8,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 }
 
 class WeatherScreen extends StatefulWidget {
-  const WeatherScreen({super.key});
+  const WeatherScreen({Key? key}) : super(key: key);
 
   @override
   _WeatherScreenState createState() => _WeatherScreenState();
@@ -53,7 +53,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     });
 
     String url =
-        "http://api.openweathermap.org/data/2.5/weather?q=$city&appid=$_apiKey&units=metric";
+        "https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$_apiKey&units=metric";
 
     try {
       var response = await http.get(Uri.parse(url));
@@ -133,7 +133,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   children: [
                     if (_iconCode.isNotEmpty)
                       Image.network(
-                        "http://openweathermap.org/img/w/$_iconCode.png",
+                        "https://openweathermap.org/img/w/$_iconCode.png",
                         height: 100,
                       ),
                     Text(

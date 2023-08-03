@@ -40323,7 +40323,7 @@ oS(a){return this.Yh(a)},
 Yh(a){var s=0,r=A.Y(t.H),q=1,p,o=[],n=this,m,l,k,j,i,h,g
 var $async$oS=A.Z(function(b,c){if(b===1){p=c
 s=q}while(true)switch(s){case 0:n.aj(new A.acg(n))
-m="http://api.openweathermap.org/data/2.5/weather?q="+a+"&appid=b9326cada9feb8c7064e123f8091bbdd&units=metric"
+m="https://api.openweathermap.org/data/2.5/weather?q="+a+"&appid=b9326cada9feb8c7064e123f8091bbdd&units=metric"
 q=3
 s=6
 return A.a_(A.aBA(A.nT(m)),$async$oS)
@@ -40362,7 +40362,7 @@ m=A.a([new A.xy(p,o,B.Jo,B.Ik,B.Il,s.ga28(),!0,r),n,new A.Et(m,r,r,r,r,B.H,r,!1,
 if(s.z)m.push(new A.ty(r,r,r,r,r,r,r))
 else if(s.y){p=A.a([],l)
 o=s.x
-if(o.length!==0)p.push(new A.uM(A.avY(r,r,new A.pJ("http://openweathermap.org/img/w/"+o+".png",1,r)),100,r))
+if(o.length!==0)p.push(new A.uM(A.avY(r,r,new A.pJ("https://openweathermap.org/img/w/"+o+".png",1,r)),100,r))
 p.push(A.hz(s.f,r,r,r,A.dT(r,r,r,r,r,r,r,r,r,r,r,24,r,r,B.ci,r,r,!0,r,r,r,r,r,r,r,r),r,r))
 p.push(A.hz("Temperatura: "+A.h(s.w)+"\xb0C",r,r,r,A.dT(r,r,r,r,r,r,r,r,r,r,r,20,r,r,r,r,r,!0,r,r,r,r,r,r,r,r),r,r))
 p.push(A.hz("Clima: "+s.r,r,r,r,A.dT(r,r,r,r,r,r,r,r,r,r,r,20,r,r,r,r,r,!0,r,r,r,r,r,r,r,r),r,r))
