@@ -84,6 +84,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
     });
 
     _debouncer.run(() {
+      if (value.trim().isEmpty) {
+        return;
+      }
       _fetchWeatherData(value);
     });
   }
@@ -119,9 +122,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: _isLoading || _textEditingController.text.isEmpty
-                  ? null
-                  : () => _fetchWeatherData(_textEditingController.text),
+              onPressed:
+                  _isLoading || _textEditingController.text.trim().isEmpty
+                      ? null
+                      : () => _fetchWeatherData(_textEditingController.text),
               child: Text('Pesquisar'),
             ),
             SizedBox(height: 16),
